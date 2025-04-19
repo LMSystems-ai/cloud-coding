@@ -8,6 +8,13 @@ A simple Python SDK for AI-powered coding assistance in your scripts and applica
 pip install lmsys
 ```
 
+### API Key
+
+Get your free key from https://cloudcoding.ai/home
+```bash
+export LMSYS_API_KEY=...
+```
+
 ## Quick Start
 
 ```python
