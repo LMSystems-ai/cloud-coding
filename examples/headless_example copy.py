@@ -1,9 +1,9 @@
 """
-Example usage of the LMSYS SDK for headless AI-assisted coding tasks
+Example usage of the Cloud Code SDK for headless AI-assisted coding tasks
 """
 
 import time
-from lmsys import Local
+from cloudcode import Local
 import os
 
 # Initialize the SDK with your project directory and API keys
@@ -11,7 +11,7 @@ sdk = Local(
     working_dir="/Users/seansullivan/aider-sdk-testing/",
     model="gpt-4.1-nano",
     use_git=False,
-    lmsys_api_key=os.getenv("LMSYS_API_KEY")
+    api_key=os.getenv("CLOUD_CODE_API_KEY")
 )
 
 # Create a test file

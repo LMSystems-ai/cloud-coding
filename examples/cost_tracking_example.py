@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 """
-Example demonstrating cost tracking with the LMSYS SDK.
+Example demonstrating cost tracking with the Cloud Code SDK.
 
 This script shows how to track and report API costs when using the SDK
 for AI-assisted coding tasks in both local and sandbox environments.
 """
 
-from lmsys import Local, SandboxSDK
+from cloudcode import Local, SandboxSDK
 import os
 import json
 
@@ -19,7 +19,7 @@ def run_local_example():
         working_dir=os.getcwd(),
         model="gpt-4.1-nano",  # Use a model that reports costs
         use_git=False,
-        lmsys_api_key=os.getenv("LMSYS_API_KEY"),
+        api_key=os.getenv("CLOUD_CODE_API_KEY"),
     )
 
     # Create a simple Python file to modify
@@ -69,7 +69,7 @@ def run_sandbox_example():
     # Initialize the Sandbox SDK with your API keys
     sdk = SandboxSDK(
         model="gpt-4.1-nano",  # Use a model that reports costs
-        lmsys_api_key=os.getenv("LMSYS_API_KEY"),
+        api_key=os.getenv("CLOUD_CODE_API_KEY"),
         sandbox_timeout=30,
     )
 
@@ -133,7 +133,7 @@ def run_detailed_cost_history_example():
         working_dir=os.getcwd(),
         model="gpt-4.1-nano",
         use_git=False,
-        lmsys_api_key=os.getenv("LMSYS_API_KEY"),
+        api_key=os.getenv("CLOUD_CODE_API_KEY"),
     )
 
     # Create a test file
@@ -196,8 +196,8 @@ def run_detailed_cost_history_example():
 
 if __name__ == "__main__":
     # Check for required API keys
-    if not os.environ.get("LMSYS_API_KEY"):
-        print("Error: LMSYS_API_KEY environment variable is required.")
+    if not os.environ.get("CLOUD_CODE_API_KEY"):
+        print("Error: CLOUD_CODE_API_KEY environment variable is required.")
         exit(1)
 
     # Run the local example

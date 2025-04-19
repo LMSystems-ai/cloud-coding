@@ -12,24 +12,22 @@ import os
 
 
 def main():
-    # Use the current directory
-    cwd = os.getcwd()
-    example_file = "example.py"
 
-    # Initialize the Cloud Code SDK in architect mode
+    # Initialize the Aider SDK in architect mode
     agent = Local(
-        working_dir=cwd,
-        model="o4-mini",  # Main (planner) model
-        editor_model="gpt-4.1",  # Editor model for implementing changes
+        working_dir="/Users/seansullivan/auto-prompt/",
+        model="o4-mini",  # Optional: specify model
+        editor_model="gpt-4.1",  # Optional: specify editor model
         architect_mode=True,
+        use_git=True,
         api_key=os.getenv("CLOUD_CODE_API_KEY")
     )
 
 
     # Run a coding task using the two-model workflow
     result = agent.code(
-        prompt="make this example.py file full of super complicated python math functions",
-        editable_files=[example_file]
+        prompt="How can i make the api keys for the pr",
+        read_only_files=["app/components/video_player.tsx"]
     )
 
     # Print the results
@@ -63,10 +61,6 @@ def main():
                 print(f"  - Total tokens: {tokens.get('input', 0) + tokens.get('output', 0)}")
     else:
         print("\nNo cost information available for this run.")
-
-    # Show the file content after the task
-    print(f"\nUpdated content of {example_file}:")
-    print(agent.read_file(example_file))
 
     # Show total costs
     total_costs = agent.get_total_cost()

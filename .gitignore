@@ -3,3 +3,6 @@ venv/
 venv/*
 __pycache__/
 __pycache__/*
+
+.aider*
+.aider.tags.cache.v4/*

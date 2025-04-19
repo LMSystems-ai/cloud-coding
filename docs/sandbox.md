@@ -1,25 +1,25 @@
 # SandboxSDK Documentation
 
-The `SandboxSDK` extends LMSYS's AI coding capabilities to an isolated Remote Coding sandbox environment. This allows you to safely run AI-assisted code modifications, test code, and execute commands in a secure, cloud-based environment.
+The `SandboxSDK` extends cloudcode's AI coding capabilities to an isolated Remote Coding sandbox environment. This allows you to safely run AI-assisted code modifications, test code, and execute commands in a secure, cloud-based environment.
 
 ## Getting Started
 
 ### Installation
 
 ```bash
-pip install lmsys
+pip install cloudcode
 ```
 
 ### Basic Usage
 
 ```python
-from lmsys import SandboxSDK
+from cloudcode import SandboxSDK
 import os
 
 # Initialize the SDK with your API keys
 sdk = SandboxSDK(
     model="gpt-4.1",  # Choose your preferred AI model
-    lmsys_api_key=os.getenv("LMSYS_API_KEY"),
+    api_key=os.getenv("CLOUDCODE_API_KEY"),
     sandbox_timeout=600,  # 10 minutes (in seconds)
 )
 
@@ -151,7 +151,7 @@ else:
 
 ```python
 # Initialize the sandbox
-sdk = SandboxSDK(model="gpt-4.1", lmsys_api_key=os.getenv("LMSYS_API_KEY"))
+sdk = SandboxSDK(model="gpt-4.1", api_key=os.getenv("CLOUDCODE_API_KEY"))
 
 # Create a data analysis script
 sdk.create_file(
@@ -193,7 +193,7 @@ sdk.download_file("/home/user/analysis_report.html", "local_report.html")
 
 ```python
 # Initialize the sandbox
-sdk = SandboxSDK(model="gpt-4.1", lmsys_api_key=os.getenv("LMSYS_API_KEY"))
+sdk = SandboxSDK(model="gpt-4.1", api_key=os.getenv("CLOUDCODE_API_KEY"))
 
 # Upload your existing web app codebase
 sdk.write_to_sandbox(
@@ -233,7 +233,7 @@ sandbox_id = sdk.sandbox_id
 # Later, reconnect to the same sandbox
 reconnected_sdk = SandboxSDK(
     model="gpt-4.1",
-    lmsys_api_key=os.getenv("LMSYS_API_KEY"),
+    api_key=os.getenv("CLOUDCODE_API_KEY"),
     sandbox_id=sandbox_id  # Connect to existing sandbox
 )
 
@@ -264,7 +264,7 @@ If the sandbox connection fails:
 # Initialize with a longer timeout and retry mechanism
 sdk = SandboxSDK(
     model="gpt-4.1",
-    lmsys_api_key=os.getenv("LMSYS_API_KEY"),
+    api_key=os.getenv("CLOUDCODE_API_KEY"),
     sandbox_timeout=1200  # 20 minutes
 )
 ```

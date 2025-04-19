@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-LMSYS LangGraph React App - AI-assisted coding using ReAct Agent with LangGraph and LMSYS SDK Sandbox
+Cloud Code LangGraph React App - AI-assisted coding using ReAct Agent with LangGraph and Cloud Code SDK Sandbox
 """
 
 
@@ -16,7 +16,7 @@ from langgraph.graph import StateGraph, END
 from langgraph.graph.message import add_messages
 
 # Import Aider SDK
-from lmsys import SandboxSDK
+from cloudcode import SandboxSDK
 
 
 # Define the agent state
@@ -46,7 +46,7 @@ def initialize_sandbox(state: AgentState) -> AgentState:
     """Initialize the sandbox environment and clone the repository if provided."""
     sdk = SandboxSDK(
         model="gpt-4.1",
-        lmsys_api_key=os.getenv("LMSYS_API_KEY"),
+        api_key=os.getenv("CLOUD_CODE_API_KEY"),
         sandbox_timeout=DEFAULT_SANDBOX_TIMEOUT,
         user_id="react-agent-user"
     )

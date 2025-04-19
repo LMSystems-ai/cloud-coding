@@ -1,8 +1,8 @@
 """
-Example usage of the Sandbox LMSYS SDK for AI-assisted coding in an E2B sandbox
+Example usage of the Sandbox Cloud Code SDK for AI-assisted coding in an E2B sandbox
 """
 
-from lmsys import SandboxSDK
+from cloudcode import SandboxSDK
 import os
 import tempfile
 
@@ -11,7 +11,7 @@ sdk = SandboxSDK(
     model="gpt-4.1",  # Main (planner) model
     editor_model="gpt-4.1-nano",  # Editor model for implementing changes
     architect_mode=True,
-    lmsys_api_key=os.getenv("LMSYS_API_KEY"),
+    api_key=os.getenv("CLOUD_CODE_API_KEY"),
     # Optional: specify a user ID for tracking sessions
     user_id="user123",
     # Optional: set sandbox timeout (in seconds)

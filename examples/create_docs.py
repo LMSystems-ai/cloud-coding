@@ -1,8 +1,8 @@
 """
-Example usage of the LMSYS SDK for AI-assisted coding
+Example usage of the Cloud Code SDK for AI-assisted coding
 """
 
-from lmsys import Local
+from cloudcode import Local
 import os
 
 
@@ -13,14 +13,14 @@ sdk = Local(
     model="o4-mini",  # Optional: specify model
     editor_model="gpt-4.1",  # Optional: specify editor model
     architect_mode=True,
-    lmsys_api_key=os.getenv("LMSYS_API_KEY")
+    api_key=os.getenv("CLOUD_CODE_API_KEY")
 )
 
 # Run an AI coding task to improve the calculator
 result = sdk.code(
     prompt="add simple quick start examples to the docs.md file based on our simple examples in example_usage.py, add_comments.py, and headless_example.py. be sure to start with the most simple, minimal code example, then go into more depth of the sdk capabilities.",
     editable_files=["docs.md"],
-    readonly_files=["lmsys.py", "example_usage.py", "add_comments.py", "headless_example.py"]
+    readonly_files=["cloudcode.py", "example_usage.py", "add_comments.py", "headless_example.py"]
 )
 
 # Check if the operation was successful

@@ -19,7 +19,7 @@ from langgraph.graph import StateGraph, END
 from langgraph.graph.message import add_messages
 
 # Import Aider SDK
-from lmsys import Local
+from cloudcode import Local
 
 
 def eval(code: str, _locals: dict[str, Any]) -> tuple[str, dict[str, Any]]:
@@ -76,16 +76,6 @@ class AgentState(TypedDict):
 # Default working directory if none provided
 DEFAULT_WORKING_DIR = os.getcwd()
 
-# Get API keys from environment
-api_keys = {
-    "OPENAI_API_KEY": os.environ.get("OPENAI_API_KEY"),
-    "ANTHROPIC_API_KEY": os.environ.get("ANTHROPIC_API_KEY"),
-    "GEMINI_API_KEY": os.environ.get("GEMINI_API_KEY"),
-    "FIREWORKS_API_KEY": os.environ.get("FIREWORKS_API_KEY"),
-    "MISTRAL_API_KEY": os.environ.get("MISTRAL_API_KEY"),
-}
-# Remove None values
-api_keys = {k: v for k, v in api_keys.items() if v is not None}
 
 # Create tool functions for the agent that take working_dir from state
 def create_file(path: str, content: str, working_dir: str = DEFAULT_WORKING_DIR) -> bool:
@@ -98,7 +88,7 @@ def create_file(path: str, content: str, working_dir: str = DEFAULT_WORKING_DIR)
         working_dir=working_dir,
         model="gpt-4.1",
         use_git=use_git,
-        api_keys=api_keys or {}
+        api_key=os.getenv("CLOUD_CODE_API_KEY")
     )
     return sdk.create_file(path, content)
 
@@ -113,7 +103,7 @@ def read_file(path: str, working_dir: str = DEFAULT_WORKING_DIR) -> str:
         working_dir=working_dir,
         model="gpt-4.1",
         use_git=use_git,
-        api_keys=api_keys or {}
+        api_key=os.getenv("CLOUD_CODE_API_KEY")
     )
     return sdk.read_file(path)
 
@@ -128,7 +118,7 @@ def search_files(query: str, glob_patterns: List[str], working_dir: str = DEFAUL
         working_dir=working_dir,
         model="gpt-4.1",
         use_git=use_git,
-        api_keys=api_keys or {}
+        api_key=os.getenv("CLOUD_CODE_API_KEY")
     )
     return sdk.search_files(query, glob_patterns)
 
@@ -143,7 +133,7 @@ def code(prompt: str, editable_files: List[str], readonly_files: Optional[List[s
         working_dir=working_dir,
         model="gpt-4.1",
         use_git=use_git,
-        api_keys=api_keys or {}
+        api_key=os.getenv("CLOUD_CODE_API_KEY")
     )
     return sdk.code(prompt, editable_files, readonly_files or [])
 
@@ -158,7 +148,7 @@ def code_headless(prompt: str, editable_files: List[str], readonly_files: Option
         working_dir=working_dir,
         model="gpt-4.1",
         use_git=use_git,
-        api_keys=api_keys or {}
+        api_key=os.getenv("CLOUD_CODE_API_KEY")
     )
     return sdk.code_headless(prompt, editable_files, readonly_files or [], task_id)
 
@@ -173,7 +163,7 @@ def get_headless_task_status(task_id: str, working_dir: str = DEFAULT_WORKING_DI
         working_dir=working_dir,
         model="gpt-4.1",
         use_git=use_git,
-        api_keys=api_keys or {}
+        api_key=os.getenv("CLOUD_CODE_API_KEY")
     )
     return sdk.get_headless_task_status(task_id)
 

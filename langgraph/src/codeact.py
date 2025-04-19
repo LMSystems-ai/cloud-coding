@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-LMSYS LangGraph App - AI-assisted coding using LangGraph and LMSYS SDK
+Cloud Code LangGraph App - AI-assisted coding using LangGraph and Cloud Code SDK
 """
 
 import builtins
@@ -14,7 +14,7 @@ from langchain.chat_models import init_chat_model
 from langgraph_codeact import create_codeact
 
 # Import Aider SDK
-from lmsys import Local
+from cloudcode import Local
 
 # Default working directory if none provided
 DEFAULT_WORKING_DIR = os.getcwd()
@@ -55,7 +55,7 @@ def get_sdk(working_dir: str = os.getcwd()) -> Local:
             working_dir=working_dir,
             model="gpt-4.1",
             use_git=use_git,
-            lmsys_api_key=os.getenv("LMSYS_API_KEY")
+            api_key=os.getenv("CLOUD_CODE_API_KEY")
         )
 
     return _sdk_cache[working_dir]

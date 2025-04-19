@@ -1,6 +1,6 @@
-# LMSYS Python SDK — `Local` Class Reference
+# cloudcode Python SDK — `Local` Class Reference
 
-The `Local` class is the primary entry point for using the LMSYS (Aider) Python SDK in your projects. It provides methods to run AI-assisted coding tasks, manage files, track costs/credits, and interact with the LMSYS API.
+The `Local` class is the primary entry point for using the cloudcode (Aider) Python SDK in your projects. It provides methods to run AI-assisted coding tasks, manage files, track costs/credits, and interact with the cloudcode API.
 
 ---
 
@@ -14,7 +14,7 @@ class Local:
         model: str = "gpt-4.1-nano",
         editor_model: Optional[str] = None,
         use_git: bool = False,
-        lmsys_api_key: Optional[str] = None,
+        api_key: Optional[str] = None,
         api_keys: Optional[Dict[str, str]] = None,
         architect_mode: bool = False,
         weak_model: Optional[str] = None,
@@ -38,8 +38,8 @@ class Local:
 - **use_git** (`bool`, default=`False`)
   If `True`, changes are staged and diffs are generated via git. Otherwise, file contents are returned without version control.
 
-- **lmsys_api_key** (`str`, optional)
-  Your LMSYS (Aider backend) API key. If provided, the SDK will authenticate against LMSYS, fetch provider keys, and enable credit tracking.
+- **api_key** (`str`, optional)
+  Your cloudcode (Aider backend) API key. If provided, the SDK will authenticate against cloudcode, fetch provider keys, and enable credit tracking.
 
 - **api_keys** (`Dict[str,str]`, optional)
   Legacy method: supply provider API keys directly, e.g. `{"openai": "sk-...", "anthropic": "ak-..."}`.
@@ -82,7 +82,7 @@ Returns a dictionary including:
 - `result`: the raw result object from the underlying coder.
 - `cost`: extracted cost info (`message_cost`, `session_cost`, `tokens` etc.).
 - `marked_up_cost`: cost with 20% markup.
-- `credits_remaining`: your remaining LMSYS credits (if authenticated).
+- `credits_remaining`: your remaining cloudcode credits (if authenticated).
 
 Raises on critical errors (e.g. invalid model, insufficient credits).
 
@@ -167,7 +167,7 @@ Returns:
 
 ### get_credit_info() → `Dict[str, float]`
 
-Fetch or refresh your LMSYS credits and limits:
+Fetch or refresh your cloudcode credits and limits:
 ```json
 {
   "credits":           <remaining>,
@@ -212,13 +212,13 @@ Fetch your past Stripe payment records:
 
 ### 1. Minimal Example
 ```python
-from lmsys import Local
+from cloudcode import Local
 import os
 
-# Initialize the SDK (ensure LMSYS_API_KEY is set in your env)
+# Initialize the SDK (ensure api_key is set in your env)
 sdk = Local(
     working_dir="/path/to/your/project",
-    lmsys_api_key=os.getenv("LMSYS_API_KEY")
+    api_key=os.getenv("CLOUDCODE_API_KEY")
 )
 
 # Create a simple file and run a coding task
@@ -235,12 +235,12 @@ print(result["diff"])
 
 ### 2. Interactive Example
 ```python
-from lmsys import Local
+from cloudcode import Local
 import os
 
 sdk = Local(
     working_dir="/Users/you/myrepo",
-    lmsys_api_key=os.getenv("LMSYS_API_KEY")
+    api_key=os.getenv("CLOUDCODE_API_KEY")
 )
 
 # Create and inspect files
@@ -270,13 +270,13 @@ if response["success"]:
 ### 3. Headless (Asynchronous) Example
 ```python
 import time
-from lmsys import Local
+from cloudcode import Local
 import os
 
 sdk = Local(
     working_dir="/Users/you/myrepo",
     use_git=False,
-    lmsys_api_key=os.getenv("LMSYS_API_KEY")
+    api_key=os.getenv("CLOUDCODE_API_KEY")
 )
 
 # Start a background coding task

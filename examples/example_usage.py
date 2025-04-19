@@ -1,17 +1,14 @@
 """
-Example usage of the LMSYS SDK for AI-assisted coding
+Example usage of the Cloud Code SDK for AI-assisted coding
 """
 
-from lmsys import Local
-
+from cloudcode import Local
+import os
 # Initialize the SDK with your project directory and API keys
 # This must be a git repository if use_git=True (default)
 sdk = Local(
     working_dir="/Users/seansullivan/aider-sdk-testing/",
-    model="gpt-4.1",  # Optional: specify model
-    editor_model=None,  # Optional: specify editor model
-    use_git=False,  # Optional: set to False to disable git requirements
-    lmsys_api_key=os.getenv("LMSYS_API_KEY")
+    api_key=os.getenv("CLOUD_CODE_API_KEY")
 )
 
 # Create a new file with content

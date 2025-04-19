@@ -1,8 +1,8 @@
 """
-Example usage of the LMSYS SDK for AI-assisted coding
+Example usage of the Cloud Code SDK for AI-assisted coding
 """
 
-from lmsys import Local
+from cloudcode import Local
 import os
 
 cwd = os.getcwd()
@@ -15,7 +15,7 @@ sdk = Local(
     editor_model="gpt-4.1",  # Optional: specify editor model
     architect_mode=True,
     use_git=False,  # Optional: set to False to disable git requirements
-    lmsys_api_key=os.getenv("LMSYS_API_KEY")
+    api_key=os.getenv("CLOUD_CODE_API_KEY")
 )
 
 # Run an AI coding task to improve the calculator

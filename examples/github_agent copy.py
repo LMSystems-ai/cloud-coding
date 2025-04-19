@@ -6,7 +6,7 @@ Edit the variables in the CONFIG section below to set your workflow.
 
 import os
 from typing import Dict, List, Optional
-from lmsys import SandboxSDK
+from cloudcode import SandboxSDK
 
 
 # =====================
@@ -22,7 +22,7 @@ PUSH_BRANCH = "feature/ai-edits"  # New branch to push changes to
 COMMIT_MESSAGE = "change the readme to say it's a blog for lmsystems.ai to talk about compounding ai agents"
 INSTALL_CMD = None  # e.g., 'pip install -r requirements.txt' or None
 RUN_CMD = None  # e.g., 'pytest' or None
-LMSYS_API_KEY = os.environ.get("LMSYS_API_KEY")  # Or hardcode your key
+CLOUD_CODE_API_KEY = os.environ.get("CLOUD_CODE_API_KEY")  # Or hardcode your key
 SANDBOX_TIMEOUT = 1800  # 30 minutes
 USER_ID = "user123"  # Optional
 GITHUB_USERNAME = "RVCA212"  # Or hardcode your username
@@ -35,7 +35,7 @@ class GitHubAgent:
     def __init__(
         self,
         model: str = "gpt-4.1",
-        lmsys_api_key: Optional[str] = None,
+        api_key: Optional[str] = None,
         sandbox_timeout: int = 1800,
         user_id: Optional[str] = None
     ):
@@ -46,13 +46,13 @@ class GitHubAgent:
         - Print sandbox ID and expiration
         """
         # ensure API key is set
-        if not lmsys_api_key:
-            lmsys_api_key = os.environ.get("LMSYS_API_KEY")
+        if not api_key:
+            api_key = os.environ.get("CLOUD_CODE_API_KEY")
         self.sdk = SandboxSDK(
             model="gpt-4.1",  # Main (planner) model
             editor_model="gpt-4.1-nano",  # Editor model for implementing changes
             architect_mode=True,
-            lmsys_api_key=lmsys_api_key,
+            api_key=api_key,
             sandbox_timeout=sandbox_timeout,
             user_id=user_id,
         )
@@ -241,7 +241,7 @@ def main():
     """
     agent = GitHubAgent(
         model="gpt-4.1",
-        lmsys_api_key=LMSYS_API_KEY,
+        api_key=CLOUD_CODE_API_KEY,
         sandbox_timeout=SANDBOX_TIMEOUT,
         user_id=USER_ID
     )

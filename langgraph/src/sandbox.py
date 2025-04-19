@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-LMSYS LangGraph Sandbox App - AI-assisted coding using ReAct Agent with LangGraph and LMSYS SDK Sandbox
+Cloud Code LangGraph Sandbox App - AI-assisted coding using ReAct Agent with LangGraph and Cloud Code SDK Sandbox
 """
 
 import os
@@ -15,8 +15,8 @@ from langchain_core.runnables import RunnableConfig
 from langgraph.graph import StateGraph, END
 from langgraph.graph.message import add_messages
 
-# Import LMSYS Sandbox SDK
-from lmsys import SandboxSDK
+# Import Cloud Code Sandbox SDK
+from cloudcode import SandboxSDK
 
 
 # Define the agent state
@@ -40,7 +40,7 @@ def initialize_sandbox(state: AgentState) -> AgentState:
     """Initialize the sandbox environment."""
     sdk = SandboxSDK(
         model="gpt-4.1",
-        lmsys_api_key=os.getenv("LMSYS_API_KEY"),
+        api_key=os.getenv("CLOUD_CODE_API_KEY"),
         sandbox_timeout=DEFAULT_SANDBOX_TIMEOUT,
         user_id="react-agent-user"
     )
@@ -358,7 +358,7 @@ if __name__ == "__main__":
             print(f"   - Model: gpt-4.1")
         except Exception as e:
             print(f"❌ Failed to initialize sandbox: {str(e)}")
-            print("Please check your LMSYS_API_KEY environment variable.")
+            print("Please check your CLOUD_CODE_API_KEY environment variable.")
             sys.exit(1)
 
         print("\nEnter your coding request (or 'quit' to exit):")
