@@ -35,9 +35,10 @@ print(result['diff'])
 ## Key Features
 
 - AI-powered code generation and modification
-- Support for multiple AI models (OpenAI, Anthropic, Google, etc.)
+- Only supporting OpenAI and Anthropic models currently
 - File operations (create, read, search)
 - Works with or without git repositories
+- Built in [Remote Sandbox](https://github.com/LMSystems-ai/cloud-coding/edit/main/docs/sandbox_docs.md) feature
 
 ## Example Usage
 
