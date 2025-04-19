@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Example of using Aider SDK in architect mode (in the current directory).
+Example of using LMSYS SDK in architect mode (in the current directory).
 
 This demonstrates the two-model approach:
 1. A main model (planner) creates a plan for code changes
@@ -16,7 +16,7 @@ def main():
     cwd = os.getcwd()
     example_file = "example.py"
 
-    # Initialize the Aider SDK in architect mode
+    # Initialize the LMSYS SDK in architect mode
     aider = Local(
         working_dir=cwd,
         model="anthropic/claude-3-5-haiku-latest",  # Main (planner) model
