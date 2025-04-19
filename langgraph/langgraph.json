@@ -1,0 +1,9 @@
+{
+    "dependencies": ["."],
+    "graphs": {
+      "agent": "./src/react.py:agent",
+      "sandbox": "./src/github_agent.py:agent",
+      "codeact": "./src/codeact.py:agent"
+    },
+    "env": ".env"
+}
