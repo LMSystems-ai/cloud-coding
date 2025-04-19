@@ -109,9 +109,9 @@ sdk = Local(
 
 ### Core Functions
 
-# Aider SDK Documentation
+# LMSYS SDK Documentation
 
-Aider SDK is a Python-based software development kit that provides programmatic access to Aider, an AI-powered coding assistant. This SDK enables developers to easily integrate AI-powered code generation, modification, and analysis capabilities into their tools and workflows.
+LMSYS SDK is a Python-based software development kit that provides programmatic access to LMSYS, an AI-powered coding assistant. This SDK enables developers to easily integrate AI-powered code generation, modification, and analysis capabilities into their tools and workflows.
 
 ## Table of Contents
 
@@ -163,7 +163,7 @@ result = sdk.code(
 
 ## Local Class
 
-The base `Local` class provides functionality for using Aider to perform AI-powered coding tasks in a local environment.
+The base `Local` class provides functionality for using our agent to perform coding tasks in a local environment.
 
 ### Initialization
 
