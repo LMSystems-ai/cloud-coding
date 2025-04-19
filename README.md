@@ -55,9 +55,11 @@ Here's a simple example showing the main capabilities:
 from lmsys import Local
 import os
 
+cwd = os.getcwd()
+
 # Initialize the SDK
 sdk = Local(
-    working_dir=".",
+    working_dir=cwd,
     model="gpt-4.1",
     use_git=False,
     lmsys_api_key=os.getenv("LMSYS_API_KEY")
