@@ -22,7 +22,7 @@ sdk = Local(
     lmsys_api_key=os.getenv("LMSYS_API_KEY")
 )
 
-# Have AI modify your lmsys
+# Have AI modify your code
 result = sdk.code(
     prompt="Add error handling to the database connection function",
     editable_files=["database.py"]
