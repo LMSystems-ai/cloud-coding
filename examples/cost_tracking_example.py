@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Example demonstrating cost tracking with the Aider SDK.
+Example demonstrating cost tracking with the LMSYS SDK.
 
 This script shows how to track and report API costs when using the SDK
 for AI-assisted coding tasks in both local and sandbox environments.
@@ -15,16 +15,16 @@ def run_local_example():
     print("\n=== Running Local Example with Cost Tracking ===")
 
     # Initialize the SDK with your API keys
-    aider = Local(
+    agent = Local(
         working_dir=os.getcwd(),
-        model="gpt-4.1",  # Use a model that reports costs
+        model="gpt-4.1-nano",  # Use a model that reports costs
         use_git=False,
         lmsys_api_key=os.getenv("LMSYS_API_KEY"),
     )
 
     # Create a simple Python file to modify
     example_file = "example_math.py"
-    aider.create_file(
+    agent.create_file(
         example_file,
         """def add(a, b):
     return a + b
@@ -35,7 +35,7 @@ def run_local_example():
 
     # Run a coding task
     print("\nRunning coding task...")
-    result = aider.code(
+    result = agent.code(
         prompt="Add a multiply function to this file that multiplies two numbers.",
         editable_files=[example_file]
     )
@@ -52,10 +52,10 @@ def run_local_example():
 
     # Show the file content after the task
     print(f"\nUpdated content of {example_file}:")
-    print(aider.read_file(example_file))
+    print(agent.read_file(example_file))
 
     # Show total costs
-    total_costs = aider.get_total_cost()
+    total_costs = agent.get_total_cost()
     print("\nTotal costs for all runs:")
     for key, value in total_costs.items():
         print(f"  - {key}: ${value:.6f}")
@@ -68,9 +68,9 @@ def run_sandbox_example():
 
     # Initialize the Sandbox SDK with your API keys
     sdk = SandboxSDK(
-        model="gpt-4.1",  # Use a model that reports costs
+        model="gpt-4.1-nano",  # Use a model that reports costs
         lmsys_api_key=os.getenv("LMSYS_API_KEY"),
-        sandbox_timeout=300,
+        sandbox_timeout=30,
     )
 
     # Get information about the sandbox
@@ -129,7 +129,7 @@ def run_detailed_cost_history_example():
     print("\n=== Cost History Analysis Example ===")
 
     # Initialize the SDK
-    aider = Local(
+    agent = Local(
         working_dir=os.getcwd(),
         model="gpt-4.1-nano",
         use_git=False,
@@ -138,7 +138,7 @@ def run_detailed_cost_history_example():
 
     # Create a test file
     test_file = "test_functions.py"
-    aider.create_file(
+    agent.create_file(
         test_file,
         """def greet(name):
     return f"Hello, {name}!"
@@ -154,13 +154,13 @@ def run_detailed_cost_history_example():
 
     for i, prompt in enumerate(prompts):
         print(f"\nRunning task {i+1}: {prompt}")
-        result = aider.code(prompt=prompt, editable_files=[test_file])
+        result = agent.code(prompt=prompt, editable_files=[test_file])
 
         if "cost" in result and result["cost"]:
             print(f"  Task {i+1} cost: ${result['cost'].get('message_cost', 0):.4f}")
 
     # Get and display the full cost history
-    cost_history = aider.get_cost_history()
+    cost_history = agent.get_cost_history()
 
     print("\nDetailed cost history:")
     print(f"Total of {len(cost_history)} entries")

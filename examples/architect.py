@@ -16,13 +16,12 @@ def main():
     cwd = os.getcwd()
     example_file = "example.py"
 
-    # Initialize the LMSYS SDK in architect mode
+    # Initialize the Aider SDK in architect mode
     agent = Local(
         working_dir=cwd,
-        model="anthropic/claude-3-5-haiku-latest",  # Main (planner) model
+        model="o4-mini",  # Main (planner) model
         editor_model="gpt-4.1",  # Editor model for implementing changes
         architect_mode=True,
-        use_git=False,
         lmsys_api_key=os.getenv("LMSYS_API_KEY")
     )
 

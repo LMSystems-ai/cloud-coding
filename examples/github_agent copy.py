@@ -8,6 +8,7 @@ import os
 from typing import Dict, List, Optional
 from lmsys import SandboxSDK
 
+
 # =====================
 # CONFIGURATION SECTION
 # =====================
@@ -21,33 +22,37 @@ PUSH_BRANCH = "feature/ai-edits"  # New branch to push changes to
 COMMIT_MESSAGE = "change the readme to say it's a blog for lmsystems.ai to talk about compounding ai agents"
 INSTALL_CMD = None  # e.g., 'pip install -r requirements.txt' or None
 RUN_CMD = None  # e.g., 'pytest' or None
-OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")  # Or hardcode your key
-E2B_API_KEY = os.environ.get("E2B_API_KEY")  # Or hardcode your key
+LMSYS_API_KEY = os.environ.get("LMSYS_API_KEY")  # Or hardcode your key
 SANDBOX_TIMEOUT = 1800  # 30 minutes
 USER_ID = "user123"  # Optional
-GITHUB_USERNAME = ""  # Or hardcode your username
+GITHUB_USERNAME = "RVCA212"  # Or hardcode your username
 GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")  # Or hardcode your personal access token
 # =====================
+
+
 
 class GitHubAgent:
     def __init__(
         self,
         model: str = "gpt-4.1",
-        openai_api_key: Optional[str] = None,
-        e2b_api_key: Optional[str] = None,
+        lmsys_api_key: Optional[str] = None,
         sandbox_timeout: int = 1800,
         user_id: Optional[str] = None
     ):
-        if not openai_api_key:
-            openai_api_key = os.environ.get("OPENAI_API_KEY")
-        if not e2b_api_key:
-            e2b_api_key = os.environ.get("E2B_API_KEY")
+        """
+        Initialize the GitHubAgent:
+        - Set up the SandboxSDK with architect mode
+        - Store sandbox working directory
+        - Print sandbox ID and expiration
+        """
+        # ensure API key is set
+        if not lmsys_api_key:
+            lmsys_api_key = os.environ.get("LMSYS_API_KEY")
         self.sdk = SandboxSDK(
-            model=model,
-            api_keys={
-                "OPENAI_API_KEY": openai_api_key,
-                "E2B_API_KEY": e2b_api_key,
-            },
+            model="gpt-4.1",  # Main (planner) model
+            editor_model="gpt-4.1-nano",  # Editor model for implementing changes
+            architect_mode=True,
+            lmsys_api_key=lmsys_api_key,
             sandbox_timeout=sandbox_timeout,
             user_id=user_id,
         )
@@ -58,7 +63,17 @@ class GitHubAgent:
         print(f"Sandbox created: {sandbox_info['sandbox_id']}")
         print(f"Sandbox will expire at: {sandbox_info['end_at']}")
 
+
+
     def clone_repository(self, repo_url: str, branch: Optional[str] = None) -> bool:
+        """
+        Clone a GitHub repository into the sandbox:
+        - Inject credentials if provided
+        - Configure git user/email
+        - Optionally checkout a specific branch
+        Returns True on success, False otherwise.
+        """
+        # record repo URL and compute local repo name
         self.repo_url = repo_url
         self.repo_name = repo_url.split("/")[-1]
         if self.repo_name.endswith(".git"):
@@ -88,7 +103,17 @@ class GitHubAgent:
         print(f"Successfully cloned repository: {self.repo_name}")
         return True
 
+
+
+
     def run_code_task(self, prompt: str, files: List[str], readonly_files: Optional[List[str]] = None) -> Dict:
+        """
+        Submit a coding task to the sandbox editor:
+        - Provide a natural-language prompt
+        - Specify editable files and optional read-only files
+        Returns the sandbox result dict containing success flag, diff, etc.
+        """
+        # ensure a repo has been cloned
         if not self.repo_name:
             print("No repository has been cloned yet.")
             return {"success": False, "error": "No repository cloned"}
@@ -107,7 +132,15 @@ class GitHubAgent:
             print("Coding task failed or made no meaningful changes.")
         return result
 
+
+
     def create_branch_and_push(self, branch_name: str, commit_message: str = "Changes made by GitHub Agent", github_username: Optional[str] = None, github_token: Optional[str] = None) -> bool:
+        """
+        Create a new git branch, stage and commit all changes,
+        then push to origin using provided GitHub credentials.
+        Returns True on success, False on any step failure.
+        """
+        # ensure a repo has been cloned
         if not self.repo_name:
             print("No repository has been cloned yet.")
             return False
@@ -146,7 +179,15 @@ class GitHubAgent:
         print(f"Successfully pushed changes to branch '{branch_name}'")
         return True
 
+
+
     def install_dependencies(self, command: str) -> Dict:
+        """
+        Install dependencies by running the specified shell command
+        inside the cloned repository directory.
+        Returns the SDK run_command result dict.
+        """
+        # ensure a repo has been cloned
         if not self.repo_name:
             print("No repository has been cloned yet.")
             return {"exit_code": 1, "stdout": "", "stderr": "No repository cloned"}
@@ -154,7 +195,14 @@ class GitHubAgent:
         full_cmd = f"cd {repo_dir} && {command}"
         return self.sdk.run_command(full_cmd)
 
+
+
     def run_command_in_repo(self, command: str) -> Dict:
+        """
+        Run an arbitrary shell command in the cloned repository directory.
+        Returns the SDK run_command result dict.
+        """
+        # ensure a repo has been cloned
         if not self.repo_name:
             print("No repository has been cloned yet.")
             return {"exit_code": 1, "stdout": "", "stderr": "No repository cloned"}
@@ -163,19 +211,37 @@ class GitHubAgent:
         return self.sdk.run_command(full_cmd)
 
     def extend_timeout(self, seconds: int = 600) -> None:
+        """
+        Extend the sandbox lifetime by the given number of seconds
+        and print the new expiration time.
+        """
+        # call SDK to increase timeout
         self.sdk.extend_sandbox_timeout(seconds)
         updated_info = self.sdk.get_sandbox_info()
         print(f"Sandbox timeout extended. New expiration: {updated_info['end_at']}")
 
     def cleanup(self) -> Dict:
+        """
+        Terminate the sandbox and clean up all resources.
+        Returns the SDK kill_sandbox result dict.
+        """
+        # kill the sandbox
         return self.sdk.kill_sandbox()
 
 
 def main():
+    """
+    Orchestrator:
+    1. Clone the repository
+    2. Install dependencies (if specified)
+    3. Run arbitrary commands (if specified)
+    4. Run the coding/editing task
+    5. Create a new branch and push changes
+    6. Clean up the sandbox
+    """
     agent = GitHubAgent(
         model="gpt-4.1",
-        openai_api_key=OPENAI_API_KEY,
-        e2b_api_key=E2B_API_KEY,
+        lmsys_api_key=LMSYS_API_KEY,
         sandbox_timeout=SANDBOX_TIMEOUT,
         user_id=USER_ID
     )

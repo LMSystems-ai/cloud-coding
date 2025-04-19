@@ -1,5 +1,5 @@
 """
-Example usage of the Aider SDK for AI-assisted coding
+Example usage of the LMSYS SDK for AI-assisted coding
 """
 
 from lmsys import Local

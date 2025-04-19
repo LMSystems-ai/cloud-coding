@@ -24,15 +24,12 @@ import os
 # Initialize the SDK
 sdk = Local(
     working_dir="/path/to/your/project",
-    model="gpt-4.1",
-    use_git=False,
     lmsys_api_key=os.getenv("LMSYS_API_KEY")
 )
 
 # Have AI modify your code
 result = sdk.code(
-    prompt="Add error handling to the database connection function",
-    editable_files=["database.py"]
+    prompt="What's this project about?"
 )
 
 print(f"Success: {result['success']}")
@@ -61,7 +58,6 @@ cwd = os.getcwd()
 sdk = Local(
     working_dir=cwd,
     model="gpt-4.1",
-    use_git=False,
     lmsys_api_key=os.getenv("LMSYS_API_KEY")
 )
 
@@ -146,10 +142,12 @@ pip install lmsys
 from lmsys import Local
 import os
 
-# Initialize the SDK
-sdk = Local(
-    working_dir="/path/to/project/",
-    model="gpt-4.1",
+# Initialize the SDK in Architect Mode
+agent = Local(
+    working_dir=cwd,
+    model="o4-mini",  # Main (planner) model
+    editor_model="gpt-4.1",  # Editor model for implementing changes
+    architect_mode=True,
     lmsys_api_key=os.getenv("LMSYS_API_KEY")
 )
 

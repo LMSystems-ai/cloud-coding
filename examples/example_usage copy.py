@@ -4,19 +4,16 @@ Example usage of the LMSYS SDK for AI-assisted coding
 
 from lmsys import Local
 import os
-
-cwd = os.getcwd()
-
 # Initialize the SDK with your project directory and API keys
 # This must be a git repository if use_git=True (default)
 sdk = Local(
-    working_dir=cwd,
+    working_dir="/Users/seansullivan/aider-sdk-testing/",
     lmsys_api_key=os.getenv("LMSYS_API_KEY")
 )
 
 # Create a new file with content
 sdk.create_file(
-    "src/calculator.py", # specify file path
+    "src/calculator.py",
     """def add(a, b):
     return a + b
 
@@ -24,6 +21,14 @@ def subtract(a, b):
     return a - b
 """
 )
+
+# Read the content of a file
+content = sdk.read_file("src/calculator.py")
+print("File content:", content)
+
+# Search for a specific string in files
+search_results = sdk.search_files("def add", ["src/*.py"])
+print("Search results:", search_results)
 
 # Run an AI coding task to improve the calculator
 result = sdk.code(

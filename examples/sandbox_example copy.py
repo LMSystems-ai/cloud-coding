@@ -1,5 +1,5 @@
 """
-Example usage of the Sandbox Aider SDK for AI-assisted coding in an E2B sandbox
+Example usage of the Sandbox LMSYS SDK for AI-assisted coding in an E2B sandbox
 """
 
 from lmsys import SandboxSDK
@@ -8,7 +8,7 @@ import tempfile
 
 # Initialize the Sandbox SDK with your API keys
 sdk = SandboxSDK(
-    model="gpt-4.1-nano",  # Main (planner) model
+    model="gpt-4.1",  # Main (planner) model
     editor_model="gpt-4.1-nano",  # Editor model for implementing changes
     architect_mode=True,
     lmsys_api_key=os.getenv("LMSYS_API_KEY"),

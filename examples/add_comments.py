@@ -11,24 +11,17 @@ cwd = os.getcwd()
 # This must be a git repository if use_git=True (default)
 sdk = Local(
     working_dir=cwd,
+    model="o4-mini",  # Optional: specify model
+    editor_model="gpt-4.1",  # Optional: specify editor model
+    architect_mode=True,
+    use_git=False,  # Optional: set to False to disable git requirements
     lmsys_api_key=os.getenv("LMSYS_API_KEY")
-)
-
-# Create a new file with content
-sdk.create_file(
-    "src/calculator.py", # specify file path
-    """def add(a, b):
-    return a + b
-
-def subtract(a, b):
-    return a - b
-"""
 )
 
 # Run an AI coding task to improve the calculator
 result = sdk.code(
-    prompt="Add a multiply and divide function to the calculator.py file. Make sure to handle division by zero in the divide function.",
-    editable_files=["src/calculator.py"],
+    prompt="Add comments to each of the functions in github_agent.py to explain what they do",
+    editable_files=["github_agent.py"],
     readonly_files=[]
 )
 
