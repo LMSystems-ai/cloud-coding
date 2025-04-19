@@ -17,7 +17,7 @@ def main():
     example_file = "example.py"
 
     # Initialize the LMSYS SDK in architect mode
-    aider = Local(
+    agent = Local(
         working_dir=cwd,
         model="anthropic/claude-3-5-haiku-latest",  # Main (planner) model
         editor_model="gpt-4.1",  # Editor model for implementing changes
@@ -27,7 +27,7 @@ def main():
     )
 
     # Create or overwrite a simple Python file to modify using the SDK
-    aider.create_file(
+    agent.create_file(
         example_file,
         """def add(a, b):
     return a + b
@@ -35,7 +35,7 @@ def main():
     )
 
     # Run a coding task using the two-model workflow
-    result = aider.code(
+    result = agent.code(
         prompt="hello world",
         editable_files=[example_file]
     )
@@ -54,7 +54,7 @@ def main():
         print("\nCost information for this run:")
 
         # Check if we're in architect mode to show planner and editor costs separately
-        if aider.architect_mode and 'planner_cost' in result['cost'] and 'editor_cost' in result['cost']:
+        if agent.architect_mode and 'planner_cost' in result['cost'] and 'editor_cost' in result['cost']:
             print(f"  - Planner model cost: ${result['cost'].get('planner_cost', 0):.6f}")
             print(f"  - Editor model cost: ${result['cost'].get('editor_cost', 0):.6f}")
             print(f"  - Combined message cost: ${result['cost'].get('message_cost', 0):.6f}")
@@ -74,10 +74,10 @@ def main():
 
     # Show the file content after the task
     print(f"\nUpdated content of {example_file}:")
-    print(aider.read_file(example_file))
+    print(agent.read_file(example_file))
 
     # Show total costs
-    total_costs = aider.get_total_cost()
+    total_costs = agent.get_total_cost()
     print("\nTotal costs for all runs in this session:")
     print(f"  - Message costs: ${total_costs['total_message_cost']:.6f}")
     print(f"  - Session costs: ${total_costs['total_session_cost']:.6f}")
