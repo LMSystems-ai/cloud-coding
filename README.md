@@ -91,9 +91,9 @@ See `example_usage.py` for a complete working example.
 ```python
 sdk = Local(
     working_dir="/path/to/your/project",  # Required
-    model="gpt-4.1",                      # Optional: specify model
-    editor_model=None,                    # Optional: specify editor model
-    use_git=True,                         # Optional: set to False to disable git
+    model="gpt-4.1",                      # Optional: specify model (default: gpt-4.1-nano)
+    editor_model=None,                    # Optional: specify editor model to enable planner/editor mode with 2 LLMs working together
+    use_git=True,                         # Optional: set to False to disable git (this helps our agent understand the codebase better when git is enabled)
     lmsys_api_key=os.getenv("LMSYS_API_KEY")
 )
 ```
@@ -161,7 +161,7 @@ The base `Local` class provides functionality for using Aider to perform AI-powe
 ```python
 Local(
     working_dir: str,
-    model: str = "gemini/gemini-2.5-pro-exp-03-25",
+    model: str = "gpt-4.1",
     editor_model: Optional[str] = None,
     use_git: bool = True,
     lmsys_api_key: Optional[str] = None
@@ -171,7 +171,7 @@ Local(
 **Parameters:**
 
 - `working_dir`: Path to the project directory where operations will occur
-- `model`: The AI model to use for coding tasks (default: "gemini/gemini-2.5-pro-exp-03-25")
+- `model`: The AI model to use for coding tasks (default: "gpt-4.1")
 - `editor_model`: Optional separate model for editing operations
 - `use_git`: Whether to use git for tracking changes (default: True)
 - `lmsys_api_key`: API key for various providers
@@ -387,7 +387,7 @@ The `SandboxSDK` class extends the base `Local` class to operate within an E2B s
 
 ```python
 SandboxSDK(
-    model: str = "gemini/gemini-2.5-pro-exp-03-25",
+    model: str = "gpt-4.1",
     editor_model: Optional[str] = None,
     lmsys_api_key: Optional[str] = None,
     sandbox_timeout: int = 300,
@@ -397,7 +397,7 @@ SandboxSDK(
 ```
 
 **Parameters:**
-- `model`: The AI model to use for coding tasks (default: "gemini/gemini-2.5-pro-exp-03-25")
+- `model`: The AI model to use for coding tasks (default: "gpt-4.1")
 - `editor_model`: Optional separate model for editing operations
 - `lmsys_api_key`: API key for various providers
 - `sandbox_timeout`: Timeout in seconds for the sandbox (default: 300 seconds)
