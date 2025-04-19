@@ -12,15 +12,14 @@ pip install lmsys
 
 ```python
 from lmsys import Local
+import os
 
 # Initialize the SDK
 sdk = Local(
     working_dir="/path/to/your/project",
     model="gpt-4.1",
     use_git=False,
-    api_keys={
-        "OPENAI_API_KEY": "your-openai-api-key"
-    }
+    lmsys_api_key=os.getenv("LMSYS_API_KEY")
 )
 
 # Have AI modify your lmsys
@@ -46,13 +45,14 @@ Here's a simple example showing the main capabilities:
 
 ```python
 from lmsys import Local
+import os
 
 # Initialize the SDK
 sdk = Local(
-    working_dir="./my_project",
+    working_dir=".",
     model="gpt-4.1",
     use_git=False,
-    api_keys={"OPENAI_API_KEY": "your-openai-key"}
+    lmsys_api_key=os.getenv("LMSYS_API_KEY")
 )
 
 # Create a file
@@ -93,11 +93,7 @@ sdk = Local(
     model="gpt-4.1",                      # Optional: specify model
     editor_model=None,                    # Optional: specify editor model
     use_git=True,                         # Optional: set to False to disable git
-    api_keys={                            # Optional: provide API keys
-        "OPENAI_API_KEY": "your-key",
-        "ANTHROPIC_API_KEY": "your-key",
-        "GEMINI_API_KEY": "your-key",
-    }
+    lmsys_api_key=os.getenv("LMSYS_API_KEY")
 )
 ```
 
@@ -138,12 +134,13 @@ pip install lmsys
 
 ```python
 from lmsys import Local
+import os
 
 # Initialize the SDK
 sdk = Local(
     working_dir="/path/to/project/",
     model="gpt-4.1",
-    api_keys={"OPENAI_API_KEY": "your-api-key"}
+    lmsys_api_key=os.getenv("LMSYS_API_KEY")
 )
 
 # Run an AI coding task
@@ -166,7 +163,7 @@ Local(
     model: str = "gemini/gemini-2.5-pro-exp-03-25",
     editor_model: Optional[str] = None,
     use_git: bool = True,
-    api_keys: Optional[Dict[str, str]] = None
+    lmsys_api_key: Optional[str] = None
 )
 ```
 
@@ -176,7 +173,7 @@ Local(
 - `model`: The AI model to use for coding tasks (default: "gemini/gemini-2.5-pro-exp-03-25")
 - `editor_model`: Optional separate model for editing operations
 - `use_git`: Whether to use git for tracking changes (default: True)
-- `api_keys`: Dictionary of API keys for various providers, e.g., {"OPENAI_API_KEY": "sk-..."}
+- `lmsys_api_key`: API key for various providers
 
 **Example:**
 
@@ -185,10 +182,7 @@ sdk = Local(
     working_dir="/path/to/project/",
     model="gpt-4.1",
     use_git=True,
-    api_keys={
-        "OPENAI_API_KEY": "sk-...",
-        "ANTHROPIC_API_KEY": "sk-ant-...",
-    }
+    lmsys_api_key="sk-..."
 )
 ```
 
@@ -394,7 +388,7 @@ The `SandboxSDK` class extends the base `Local` class to operate within an E2B s
 SandboxSDK(
     model: str = "gemini/gemini-2.5-pro-exp-03-25",
     editor_model: Optional[str] = None,
-    api_keys: Optional[Dict[str, str]] = None,
+    lmsys_api_key: Optional[str] = None,
     sandbox_timeout: int = 300,
     sandbox_id: Optional[str] = None,
     user_id: Optional[str] = None,
@@ -404,7 +398,7 @@ SandboxSDK(
 **Parameters:**
 - `model`: The AI model to use for coding tasks (default: "gemini/gemini-2.5-pro-exp-03-25")
 - `editor_model`: Optional separate model for editing operations
-- `api_keys`: Dictionary of API keys for various providers
+- `lmsys_api_key`: API key for various providers
 - `sandbox_timeout`: Timeout in seconds for the sandbox (default: 300 seconds)
 - `sandbox_id`: ID of existing sandbox to connect to (optional)
 - `user_id`: User ID for tracking and persistence (optional)
@@ -414,10 +408,7 @@ SandboxSDK(
 ```python
 sandbox_sdk = SandboxSDK(
     model="gpt-4.1",
-    api_keys={
-        "OPENAI_API_KEY": "sk-...",
-        "E2B_API_KEY": "e2b_sk-...",
-    },
+    lmsys_api_key="sk-...",
     sandbox_timeout=600,
     user_id="user123"
 )
@@ -661,11 +652,12 @@ print(f"Termination success: {result['success']}")
 
 ```python
 from lmsys import Local
+import os
 
 sdk = Local(
     working_dir="/path/to/project/",
     model="gpt-4.1",
-    api_keys={"OPENAI_API_KEY": "sk-..."}
+    lmsys_api_key=os.getenv("LMSYS_API_KEY")
 )
 
 # Create a file
@@ -695,11 +687,12 @@ print(updated_code)
 ```python
 import time
 from lmsys import Local
+import os
 
 sdk = Local(
     working_dir="/path/to/project/",
     model="gpt-4.1",
-    api_keys={"OPENAI_API_KEY": "sk-..."}
+    lmsys_api_key=os.getenv("LMSYS_API_KEY")
 )
 
 # Start a headless task
@@ -735,10 +728,9 @@ import os
 
 sdk = SandboxSDK(
     model="gpt-4.1",
-    api_keys={
-        "OPENAI_API_KEY": "sk-...",
-        "E2B_API_KEY": "e2b_sk-...",
-    }
+    lmsys_api_key=os.getenv("LMSYS_API_KEY"),
+    sandbox_timeout=600,
+    user_id="user123"
 )
 
 # Get sandbox info
