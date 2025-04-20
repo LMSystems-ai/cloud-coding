@@ -162,7 +162,6 @@ print("\n# To kill the sandbox when done, uncomment the next line:")
 print("# kill_result = sdk.kill_sandbox()")
 print("# print(f\"Sandbox termination: {kill_result['message']}\")")
 
-# If you really want to kill the sandbox, uncomment these lines:
 kill_result = sdk.kill_sandbox()
 print(f"Sandbox termination: {kill_result['message']}")
 print(f"Termination success: {kill_result['success']}")
