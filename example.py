@@ -142,4 +142,88 @@ def eigenvalues_2x2(m):
     disc = cmath.sqrt(tr*tr - 4*det)
     return ((tr + disc)/2, (tr - disc)/2)
 
+# ---------------- super–complicated math routines ----------------
+
+def lambert_W(x, tol=1e-12, maxiter=50):
+    """Principal branch of Lambert W via Halley's method."""
+    if x < -1/math.e:
+        raise ValueError("x must be ≥ -1/e")
+    # initial guess
+    w = math.log1p(x)
+    for _ in range(maxiter):
+        e = math.exp(w)
+        f = w*e - x
+        # Halley update
+        dw = f / (e*(w+1) - (w+2)*f/(2*(w+1)))
+        w -= dw
+        if abs(dw) < tol*(1+abs(w)):
+            return w
+    raise RuntimeError("Lambert W did not converge")
+
+def riemann_zeta(s, terms=100):
+    """Riemann zeta via Euler–Maclaurin summation (s≠1)."""
+    if s == 1:
+        raise ValueError("Pole at s=1")
+    # partial sum
+    S = sum(1.0/n**s for n in range(1, terms+1))
+    # Euler–Maclaurin correction up to B6
+    t = terms
+    correction = t**(-s+1)/(s-1) + t**(-s)/2
+    correction += s*t**(-s-1)/12 - s*(s+1)*(s+2)*t**(-s-3)/720
+    return S + correction
+
+def recursive_fft(x):
+    """Cooley–Tukey FFT (length must be power of two)."""
+    N = len(x)
+    if N <= 1:
+        return x
+    if N & (N-1):
+        # not power of two, fall back
+        return discrete_fourier_transform(x)
+    even = recursive_fft(x[0::2])
+    odd  = recursive_fft(x[1::2])
+    factor = [cmath.exp(-2j*math.pi*k/N) * odd[k] for k in range(N//2)]
+    return [even[k] + factor[k] for k in range(N//2)] + \
+           [even[k] - factor[k] for k in range(N//2)]
+
+def qr_decomposition(A):
+    """Classical Gram–Schmidt QR decomposition of A (n×m)."""
+    n, m = len(A), len(A[0])
+    Q = [[0.0]*m for _ in range(n)]
+    R = [[0.0]*m for _ in range(m)]
+    for j in range(m):
+        # v = A[:,j]
+        v = [A[i][j] for i in range(n)]
+        for i in range(j):
+            R[i][j] = sum(Q[k][i] * A[k][j] for k in range(n))
+            for k in range(n):
+                v[k] -= R[i][j] * Q[k][i]
+        norm = math.sqrt(sum(vi*vi for vi in v))
+        R[j][j] = norm
+        if norm == 0:
+            raise ValueError("Matrix has linearly dependent columns")
+        for k in range(n):
+            Q[k][j] = v[k] / norm
+    return Q, R
+
+def elliptic_integrals(m, tol=1e-12):
+    """
+    Legendre complete elliptic integrals K(m) and E(m)
+    via the arithmetic–geometric mean (AGM) method.
+    """
+    a, b = 1.0, math.sqrt(1 - m)
+    c = math.sqrt(m)
+    sumE = 1.0
+    two_pow = 1.0
+    while abs(c) > tol:
+        a_next = (a + b) / 2
+        b = math.sqrt(a * b)
+        c = (a - b) / 2
+        two_pow *= 2
+        sumE += two_pow * c*c
+        a = a_next
+    K = math.pi / (2 * a)
+    E = K * (1 - sumE/2)
+    return K, E
+
 # -----------------------------------------------------------------
