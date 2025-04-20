@@ -1,1 +1,1 @@
-cloudcode==0.0.4
+cloudcode==0.0.5

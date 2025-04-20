@@ -15,7 +15,7 @@ def main():
 
     # Initialize the Aider SDK in architect mode
     agent = Local(
-        working_dir="/Users/seansullivan/auto-prompt/",
+        working_dir="/Users/seansullivan/with-supabase-app/",
         model="o4-mini",  # Optional: specify model
         editor_model="gpt-4.1",  # Optional: specify editor model
         architect_mode=True,
@@ -26,8 +26,9 @@ def main():
 
     # Run a coding task using the two-model workflow
     result = agent.code(
-        prompt="How can i make the api keys for the pr",
-        read_only_files=["app/components/video_player.tsx"]
+        prompt="modify the test.md file by just adding the words 'hello world' to it",
+        editable_files=[],
+        readonly_files=[]
     )
 
     # Print the results

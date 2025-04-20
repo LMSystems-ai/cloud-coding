@@ -1,5 +1,5 @@
 """
-Example usage of the Sandbox Cloud Code SDK for AI-assisted coding in an E2B sandbox
+Example usage of the Sandbox Cloud Code SDK for AI-assisted coding in a sandbox
 """
 
 from cloudcode import SandboxSDK

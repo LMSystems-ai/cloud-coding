@@ -388,7 +388,7 @@ if status["status"] == "completed":
 
 ## SandboxSDK Class
 
-The `SandboxSDK` class extends the base `Local` class to operate within an E2B sandbox environment, enabling isolated code execution and testing.
+The `SandboxSDK` class extends the base `Local` class to operate within a sandbox environment, enabling isolated code execution and testing.
 
 ### Sandbox Initialization
 

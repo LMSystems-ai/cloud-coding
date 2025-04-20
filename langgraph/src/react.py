@@ -22,26 +22,6 @@ from langgraph.graph.message import add_messages
 from cloudcode import Local
 
 
-def eval(code: str, _locals: dict[str, Any]) -> tuple[str, dict[str, Any]]:
-    """Execute code and capture its output and new variables."""
-    # Store original keys before execution
-    original_keys = set(_locals.keys())
-
-    try:
-        with contextlib.redirect_stdout(io.StringIO()) as f:
-            exec(code, builtins.__dict__, _locals)
-        result = f.getvalue()
-        if not result:
-            result = "<code ran, no output printed to stdout>"
-    except Exception as e:
-        result = f"Error during execution: {repr(e)}"
-
-    # Determine new variables created during execution
-    new_keys = set(_locals.keys()) - original_keys
-    new_vars = {key: _locals[key] for key in new_keys}
-    return result, new_vars
-
-
 def is_git_repository(path: str) -> bool:
     """Check if the given directory is a git repository."""
     git_dir = os.path.join(path, '.git')
@@ -182,7 +162,7 @@ tools = [
 tools_by_name = {tool.__name__: tool for tool in tools}
 
 # Initialize the language model and bind tools
-model = init_chat_model("gpt-4.1", model_provider="openai")
+model = init_chat_model("o4-mini", model_provider="openai")
 model = model.bind_tools(tools)
 
 # Define the tool node for the react agent
@@ -216,6 +196,7 @@ def call_model(state: AgentState, config: RunnableConfig):
         "You are an AI coding assistant that helps with programming tasks. "
         "You can create files, read files, search for content in files, and help write code. "
         "Use the tools provided to assist the user effectively. "
+        "For coding, you must only use the code and code_headless tools. These tools take in single step coding tasks described in natural language. "
         "When working on multiple coding tasks that could run in parallel, you can use "
         "code_headless to start tasks without waiting for them to complete, and "
         "get_headless_task_status to check on their progress later."
