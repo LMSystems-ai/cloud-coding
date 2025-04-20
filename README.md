@@ -1,30 +1,30 @@
-# lmsys Python SDK
+# cloudcode Python SDK
 
 A simple Python SDK for AI-powered coding assistance in your scripts and applications.
 
 ## Installation
 
 ```bash
-pip install lmsys
+pip install cloudcode
 ```
 
 ### API Key
 
 Get your free key from https://cloudcoding.ai/home
 ```bash
-export LMSYS_API_KEY=...
+export CLOUD_CODE_API_KEY=...
 ```
 
 ## Quick Start
 
 ```python
-from lmsys import Local
+from cloudcode import Local
 import os
 
 # Initialize the SDK
 sdk = Local(
     working_dir="/path/to/your/project",
-    lmsys_api_key=os.getenv("LMSYS_API_KEY")
+    api_key=os.getenv("CLOUD_CODE_API_KEY")
 )
 
 # Have AI modify your code
@@ -49,7 +49,7 @@ print(result['diff'])
 Here's a simple example showing the main capabilities:
 
 ```python
-from lmsys import Local
+from cloudcode import Local
 import os
 
 cwd = os.getcwd()
@@ -58,7 +58,7 @@ cwd = os.getcwd()
 sdk = Local(
     working_dir=cwd,
     model="gpt-4.1",
-    lmsys_api_key=os.getenv("LMSYS_API_KEY")
+    api_key=os.getenv("CLOUD_CODE_API_KEY")
 )
 
 # Create a file
@@ -99,15 +99,15 @@ sdk = Local(
     model="gpt-4.1",                      # Optional: specify model (default: gpt-4.1-nano)
     editor_model=None,                    # Optional: specify editor model to enable planner/editor mode with 2 LLMs working together
     use_git=True,                         # Optional: set to False to disable git (this helps our agent understand the codebase better when git is enabled)
-    lmsys_api_key=os.getenv("LMSYS_API_KEY")
+    api_key=os.getenv("CLOUD_CODE_API_KEY")
 )
 ```
 
 ### Core Functions
 
-# LMSYS SDK Documentation
+# cloudcode SDK Documentation
 
-LMSYS SDK is a Python-based software development kit that provides programmatic access to LMSYS, an AI-powered coding assistant. This SDK enables developers to easily integrate AI-powered code generation, modification, and analysis capabilities into their tools and workflows.
+cloudcode SDK is a Python-based software development kit that provides programmatic access to cloudcode, an AI-powered coding assistant. This SDK enables developers to easily integrate AI-powered code generation, modification, and analysis capabilities into their tools and workflows.
 
 ## Table of Contents
 
@@ -133,13 +133,13 @@ LMSYS SDK is a Python-based software development kit that provides programmatic 
 ## Installation
 
 ```bash
-pip install lmsys
+pip install cloudcode
 ```
 
 ## Basic Usage
 
 ```python
-from lmsys import Local
+from cloudcode import Local
 import os
 
 # Initialize the SDK in Architect Mode
@@ -148,7 +148,7 @@ agent = Local(
     model="o4-mini",  # Main (planner) model
     editor_model="gpt-4.1",  # Editor model for implementing changes
     architect_mode=True,
-    lmsys_api_key=os.getenv("LMSYS_API_KEY")
+    api_key=os.getenv("CLOUD_CODE_API_KEY")
 )
 
 # Run an AI coding task
@@ -171,7 +171,7 @@ Local(
     model: str = "gpt-4.1",
     editor_model: Optional[str] = None,
     use_git: bool = True,
-    lmsys_api_key: Optional[str] = None
+    api_key: Optional[str] = None
 )
 ```
 
@@ -181,7 +181,7 @@ Local(
 - `model`: The AI model to use for coding tasks (default: "gpt-4.1")
 - `editor_model`: Optional separate model for editing operations
 - `use_git`: Whether to use git for tracking changes (default: True)
-- `lmsys_api_key`: API key for various providers
+- `api_key`: API key for various providers
 
 **Example:**
 
@@ -190,7 +190,7 @@ sdk = Local(
     working_dir="/path/to/project/",
     model="gpt-4.1",
     use_git=True,
-    lmsys_api_key="sk-..."
+    api_key="sk-..."
 )
 ```
 
@@ -396,7 +396,7 @@ The `SandboxSDK` class extends the base `Local` class to operate within an E2B s
 SandboxSDK(
     model: str = "gpt-4.1",
     editor_model: Optional[str] = None,
-    lmsys_api_key: Optional[str] = None,
+    api_key: Optional[str] = None,
     sandbox_timeout: int = 300,
     sandbox_id: Optional[str] = None,
     user_id: Optional[str] = None,
@@ -406,7 +406,7 @@ SandboxSDK(
 **Parameters:**
 - `model`: The AI model to use for coding tasks (default: "gpt-4.1")
 - `editor_model`: Optional separate model for editing operations
-- `lmsys_api_key`: API key for various providers
+- `api_key`: API key for various providers
 - `sandbox_timeout`: Timeout in seconds for the sandbox (default: 300 seconds)
 - `sandbox_id`: ID of existing sandbox to connect to (optional)
 - `user_id`: User ID for tracking and persistence (optional)
@@ -416,7 +416,7 @@ SandboxSDK(
 ```python
 sandbox_sdk = SandboxSDK(
     model="gpt-4.1",
-    lmsys_api_key="sk-...",
+    api_key="sk-...",
     sandbox_timeout=600,
     user_id="user123"
 )
@@ -659,13 +659,13 @@ print(f"Termination success: {result['success']}")
 ### Basic Usage Example
 
 ```python
-from lmsys import Local
+from cloudcode import Local
 import os
 
 sdk = Local(
     working_dir="/path/to/project/",
     model="gpt-4.1",
-    lmsys_api_key=os.getenv("LMSYS_API_KEY")
+    api_key=os.getenv("CLOUD_CODE_API_KEY")
 )
 
 # Create a file
@@ -694,13 +694,13 @@ print(updated_code)
 
 ```python
 import time
-from lmsys import Local
+from cloudcode import Local
 import os
 
 sdk = Local(
     working_dir="/path/to/project/",
     model="gpt-4.1",
-    lmsys_api_key=os.getenv("LMSYS_API_KEY")
+    api_key=os.getenv("CLOUD_CODE_API_KEY")
 )
 
 # Start a headless task
@@ -731,12 +731,12 @@ while True:
 ### Sandbox Usage Example
 
 ```python
-from lmsys import SandboxSDK
+from cloudcode import SandboxSDK
 import os
 
 sdk = SandboxSDK(
     model="gpt-4.1",
-    lmsys_api_key=os.getenv("LMSYS_API_KEY"),
+    api_key=os.getenv("CLOUD_CODE_API_KEY"),
     sandbox_timeout=600,
     user_id="user123"
 )
