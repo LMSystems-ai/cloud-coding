@@ -23,3 +23,6 @@ langgraph dev
 - Sandbox: `sandbox.py` is the same as the react agent but uses the sandbox sdk from cloudcode to make code changes in a remote sandbox directory
 
 - Codeact: `codeact.py` uses langgraph [codeact](https://github.com/langchain-ai/langgraph-codeact) with the cloudcode sdk for coding in a specific local directory
+
+- Websearch: *WIP* `websearch.py` is 2 react agents: a planner agent whose job it is to research the web and the codebase to generate a plan, then a coder agent to execute the plan.
+Currently the handoff between the planner and coder isn't working.
