@@ -60,7 +60,9 @@ cwd = os.getcwd()
 # Initialize the SDK
 sdk = Local(
     working_dir=cwd,
-    model="gpt-4.1",
+    model="o4-mini",
+    editor_model="gpt-4.1",
+    architect_mode=True,
     api_key=os.getenv("CLOUD_CODE_API_KEY")
 )
 
@@ -99,8 +101,9 @@ See `example_usage.py` for a complete working example.
 ```python
 sdk = Local(
     working_dir="/path/to/your/project",  # Required
-    model="gpt-4.1",                      # Optional: specify model (default: gpt-4.1-nano)
-    editor_model=None,                    # Optional: specify editor model to enable planner/editor mode with 2 LLMs working together
+    model="o4-mini",
+    editor_model="gpt-4.1",
+    architect_mode=True,                  # Optional: specify editor model to enable planner/editor mode with 2 LLMs working together
     use_git=True,                         # Optional: set to False to disable git (this helps our agent understand the codebase better when git is enabled)
     api_key=os.getenv("CLOUD_CODE_API_KEY")
 )
