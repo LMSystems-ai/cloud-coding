@@ -3,7 +3,8 @@
     "graphs": {
       "agent": "./src/react.py:agent",
       "sandbox": "./src/github_agent.py:agent",
-      "codeact": "./src/codeact.py:agent"
+      "codeact": "./src/codeact.py:agent",
+      "websearch_coder": "./src/websearch.py:agent"
     },
     "env": ".env"
 }

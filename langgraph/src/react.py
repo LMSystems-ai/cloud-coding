@@ -162,7 +162,7 @@ tools = [
 tools_by_name = {tool.__name__: tool for tool in tools}
 
 # Initialize the language model and bind tools
-model = init_chat_model("o4-mini", model_provider="openai")
+model = init_chat_model("claude-3-7-sonnet-latest", model_provider="anthropic")
 model = model.bind_tools(tools)
 
 # Define the tool node for the react agent

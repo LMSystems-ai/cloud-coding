@@ -1,4 +1,6 @@
-__pycache__
+__pycache__/
+.aider.chat.history.md
+.aider.model.settings.yml
 .langgraph_api/
 .env
 .aider*
