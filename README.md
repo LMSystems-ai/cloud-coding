@@ -10,10 +10,13 @@ pip install cloudcode
 
 ### API Key
 
-Get your free key from https://cloudcoding.ai/home
+Every user gets $5 free credit with no credit card required
+Get your key [here](https://cloudcoding.ai/home)
 ```bash
 export CLOUD_CODE_API_KEY=...
 ```
+
+check out our [Docs](https://docs.cloudcoding.ai/introduction)
 
 ## Quick Start
 
