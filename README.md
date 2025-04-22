@@ -2,6 +2,8 @@
 
 A simple Python SDK for AI-powered coding assistance in your scripts and applications.
 
+Check out the Official [Docs](https://docs.cloudcoding.ai/introduction)
+
 ## Installation
 
 ```bash
@@ -15,8 +17,6 @@ Get your key [here](https://cloudcoding.ai/home)
 ```bash
 export CLOUD_CODE_API_KEY=...
 ```
-
-check out our [Docs](https://docs.cloudcoding.ai/introduction)
 
 ## Quick Start
 
